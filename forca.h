@@ -6,3 +6,4 @@ void desenhaforca();
 void escolhasecreta();
 int enforcouusuario();
 int acertouusuario();
+void adicionarpalavra();
