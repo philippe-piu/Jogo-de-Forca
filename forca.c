@@ -4,7 +4,7 @@
 
 //Variaveis Globais
 char palavrasecreta[TAMANHO_PALAVRA];
-char chutestentativas[26];
+char chutestentativas[TAMANHO_CHUTE_TENTATIVAS];
 int chutesdados = 0;
 
 //Jogo da Forca
@@ -25,7 +25,7 @@ int main()
 	}
 	while(!acertouusuario() && !enforcouusuario());
 	//Quando tem isso !acertou ele assume como um booleano true e false
-	
+
 	msgfinal();
 	adicionarpalavra();
 
@@ -47,15 +47,44 @@ void msgfinal()
 	if(acertouusuario())
 	{
 		printf("\nParabens voce ganhou o jogo\n");
+
+		printf("       ___________      \n");
+		printf("      '._==_==_=_.'     \n");
+		printf("      .-\\:      /-.    \n");
+		printf("     | (|:.     |) |    \n");
+		printf("      '-|:.     |-'     \n");
+		printf("        \\::.    /      \n");
+		printf("         '::. .'        \n");
+		printf("           ) (          \n");
+		printf("         _.' '._        \n");
+		printf("        '-------'       \n\n");
 	}
 	else
 	{
 		printf("\nGame Over\n");
+		printf("A palavra era **%s**\n\n", palavrasecreta);
+		
+		printf("    _______________         \n");
+		printf("   /               \\       \n");
+		printf("  /                 \\      \n");
+		printf("//                   \\/\\  \n");
+		printf("\\|   XXXX     XXXX   | /   \n");
+		printf(" |   XXXX     XXXX   |/     \n");
+		printf(" |   XXX       XXX   |      \n");
+		printf(" |                   |      \n");
+		printf(" \\__      XXX      __/     \n");
+		printf("   |\\     XXX     /|       \n");
+		printf("   | |           | |        \n");
+		printf("   | I I I I I I I |        \n");
+		printf("   |  I I I I I I  |        \n");
+		printf("   \\_             _/       \n");
+		printf("     \\_         _/         \n");
+		printf("       \\_______/           \n");
 	}
 }
 
 //Chute do Usuario
-void chuta(char chutestentativas[26], int *chutesdados)
+void chuta(char chutestentativas[TAMANHO_CHUTE_TENTATIVAS], int *chutesdados)
 {
 	char chute;
 	printf("\nInforme uma letra para forca: ");
@@ -84,8 +113,21 @@ int jachutou(char letra)
 //Função do Desenho da forca
 void desenhaforca()
 {
-	int i;
+	int i, erros = chuteserrados();
 	printf("\n");
+
+	printf("  _______       \n");
+	printf(" |/      |      \n");
+	printf(" |      %c%c%c  \n", (erros >= 1 ? '(' : ' '),
+		   (erros >= 1 ? '_' : ' '), (erros >= 1 ? ')' : ' '));
+	printf(" |      %c%c%c  \n", (erros >= 3 ? '\\' : ' '),
+		   (erros >= 2 ? '|' : ' '), (erros >= 3 ? '/' : ' '));
+	printf(" |       %c     \n", (erros >= 2 ? '|' : ' '));
+	printf(" |      %c %c   \n", (erros >= 4 ? '/' : ' '),
+		   (erros >= 4 ? '\\' : ' '));
+	printf(" |              \n");
+	printf("_|___           \n");
+	printf("\n\n");
 
 	printf("Voce deu %d chutes\n", chutesdados);
 
@@ -179,8 +221,8 @@ void escolhasecreta()
 	fclose(f);
 }
 
-//Função de finalização de jogo se usuario perdeu
-int enforcouusuario()
+//Função de chutes errados
+int chuteserrados()
 {
 	int i, j, existe, erros;
 	erros = 0;
@@ -204,8 +246,15 @@ int enforcouusuario()
 		if(!existe) erros++;
 	}
 
+	return erros;
+}
+
+//Função de finalização de jogo se usuario perdeu
+int enforcouusuario()
+{
+
 	//Se o erros for maior ou igual a 5 Jogador perdeu
-	return erros >= 5;
+	return chuteserrados() >= 5;
 }
 
 //Função finaliza o jogo caso usuario ganhou
