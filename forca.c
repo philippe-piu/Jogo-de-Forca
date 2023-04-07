@@ -3,7 +3,7 @@
 #include "forca.h"
 
 //Variaveis Globais
-char palavrasecreta[20];
+char palavrasecreta[TAMANHO_PALAVRA];
 char chutestentativas[26];
 int chutesdados = 0;
 
@@ -25,8 +25,10 @@ int main()
 	}
 	while(!acertouusuario() && !enforcouusuario());
 	//Quando tem isso !acertou ele assume como um booleano true e false
-
+	
+	msgfinal();
 	adicionarpalavra();
+
 	return(0);
 }
 
@@ -39,6 +41,18 @@ void apresentacao()
 	printf("\n");
 }
 
+//Função de Finalização do jogo
+void msgfinal()
+{
+	if(acertouusuario())
+	{
+		printf("\nParabens voce ganhou o jogo\n");
+	}
+	else
+	{
+		printf("\nGame Over\n");
+	}
+}
 
 //Chute do Usuario
 void chuta(char chutestentativas[26], int *chutesdados)
@@ -101,7 +115,7 @@ void adicionarpalavra()
 
 	if(resposta == 'S')
 	{
-		char novapalavra[20];
+		char novapalavra[TAMANHO_PALAVRA];
 		printf("Qual a nova palavra secreta ?\n");
 		scanf("%s", &novapalavra);
 
@@ -211,3 +225,4 @@ int acertouusuario()
 
 	return 1;
 }
+
